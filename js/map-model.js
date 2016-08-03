@@ -8,12 +8,12 @@ function Local(coordinates, continent, country, city) {
 //  var giza = Local({lat: 29.9792345, lng: 31.1320132}, "africa", "egypt", "giza");
 // }
 
-Local.prototype.createMap = function() {
+Local.prototype.createMap = function(zoomNumber) {
   // debugger;
   var map = new google.maps.Map(document.getElementById('map'), {
     center: this.coordinates,
     scrollwheel: false,
-    zoom: 18,
+    zoom: zoomNumber,
     mapTypeId: google.maps.MapTypeId.SATELLITE,
     disableDefaultUI: true
   });
@@ -25,6 +25,6 @@ Local.prototype.createMap = function() {
   });
 
   return map;
-};
+}
 
 exports.localModule = Local;

@@ -25,8 +25,9 @@ $('document').ready(function() {
 
   // Gameplay
   var locationNumber = 0;
+  var zoomNumber = 18;
   currentMap = locationObjects[locationNumber];
-  currentMap.createMap();
+  currentMap.createMap(zoomNumber);
 
   var score = 1000;
   $('#score').text(score);
@@ -36,23 +37,31 @@ $('document').ready(function() {
   $('#next-map').click(function(){
     locationNumber++;
     currentMap = locationObjects[locationNumber];
-    currentMap.createMap();
+    currentMap.createMap(zoomNumber);
   });
 
   $('#guess').click(function() {
     var cityGuess = $('#city').val();
     if (cityGuess === currentMap.city) {
       alert("correct");
-      score = score + (10 * currentMap.zoom);
+      score = score + (10 * zoomNumber);
+      locationNumber++
+      currentMap = locationObjects[locationNumber];
+      zoomNumber = 18;
+      currentMap.createMap(zoomNumber);
     } else {
       alert("wrong");
       score = score - 50;
     };
-    debugger
     $('#score').text(score);
     console.log(locationNumber);
     console.log(this.zoom);
 
+  });
+
+  $('#zoom-button').click(function(){
+    zoomNumber -= 1;
+    currentMap.createMap(zoomNumber);
   });
 
 
