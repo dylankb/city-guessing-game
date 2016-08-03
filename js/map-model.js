@@ -25,6 +25,6 @@ Local.prototype.createMap = function() {
   });
 
   return map;
-}
+};
 
 exports.localModule = Local;
