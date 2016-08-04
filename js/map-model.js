@@ -7,8 +7,8 @@ Local.prototype.getCoordinates = function(zoomNumber) {
   var thisCity = this.city;
   var self = this;
   var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {'address': "Zürich, Switzerland"}, function(results) {
-    self.createMap(zoomNumber, results[0].geometry.location)
+  geocoder.geocode( {'address': thisCity}, function(results) {
+    self.createMap(zoomNumber, results[0].geometry.location);
   });
 };
 

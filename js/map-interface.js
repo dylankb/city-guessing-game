@@ -119,6 +119,10 @@ var locationObjects = [["Aberdeen, Scotland","57","2"],
 ["Zürich, Switzerland","47","8"]];
 
 $('document').ready(function() {
+  var newCity;
+  var cityNumber;
+  var correctCity;
+
   function reset(){
     var choices = [];
     for (i=0; i<5; i++) {
@@ -134,7 +138,8 @@ $('document').ready(function() {
       cityNumber = Math.floor(Math.random() * 4);
       correctCity = choices[cityNumber];
     }
-    var newCity = new Local(correctCity);
+    // debugger;
+    newCity = new Local(correctCity);
     var zoomNumber = 18;
     newCity.getCoordinates(zoomNumber);
   }
@@ -151,9 +156,10 @@ $('document').ready(function() {
     if (cityGuess === cityNumber) {
       alert("correct");
       score = score + (10 * zoomNumber);
+
       reset();
     } else {
-      // alert("wrong");
+      alert("wrong");
       score -= 100;
     }
     $('#score').text(score);
@@ -161,6 +167,7 @@ $('document').ready(function() {
 
   $('#zoom-button').click(function(){
     zoomNumber -= 1;
+    // debugger;
     newCity.getCoordinates(zoomNumber);
   });
 
