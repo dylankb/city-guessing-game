@@ -119,67 +119,49 @@ var locationObjects = [["Aberdeen, Scotland","57","2"],
 ["Zürich, Switzerland","47","8"]];
 
 $('document').ready(function() {
-  var choices = [];
-  for (i=0; i<5; i++) {
-    newNum = Math.floor((Math.random() * 119)+1);
-    if (choices.indexOf(newNum) === -1) {
-      choices.push(locationObjects[newNum][0]);
-      $("#" + i).append(choices[i]);
-    } else {
-      num = Math.floor((Math.random() * 119)+1);
-      choices.push(locationObjects[num][0]);
-      $("#" + i).text(choices[i]);
+  function reset(){
+    var choices = [];
+    for (i=0; i<5; i++) {
+      newNum = Math.floor((Math.random() * 119)+1);
+      if (choices.indexOf(newNum) === -1) {
+        choices.push(locationObjects[newNum][0]);
+        $("#" + i).text(choices[i]);
+      } else {
+        num = Math.floor((Math.random() * 119)+1);
+        choices.push(locationObjects[num][0]);
+        $("#" + i).text(choices[i]);
+      }
+      cityNumber = Math.floor(Math.random() * 4);
+      correctCity = choices[cityNumber];
     }
-    correctCity = choices[Math.floor(Math.random() * 4)];
+    var newCity = new Local(correctCity);
+    var zoomNumber = 18;
+    newCity.getCoordinates(zoomNumber);
   }
-  alert (correctCity + "hi")
-  var newCity = new Local(correctCity);
-  var zoomNumber = 18;
-  newCity.getCoordinates(zoomNumber);
 
-
-
-
-
+  reset();
   var score = 1000;
   $('#score').text(score);
-  var newCity = new Local(locationObjects[locationNumber][0]);
-  newCity.getCoordinates(zoomNumber);
 
-  // User input
-
-  $('#next-map').click(function(){
-    locationNumber++;
-    var newCity = new Local(locationObjects[locationNumber][0])
-    newCity.getCoordinates(18);
-  });
+  var zoomNumber = 18;
 
   $('#guess').click(function() {
-    var cityGuess = $('#city').val();
-    if (cityGuess === currentMap.city) {
+    var cityGuess = parseInt($('input:radio[name=city]:checked').val());
+    alert(cityGuess + " " + cityNumber);
+    if (cityGuess === cityNumber) {
       alert("correct");
       score = score + (10 * zoomNumber);
-      locationNumber++;
-      currentMap = locationObjects[locationNumber][0];
-      zoomNumber = 18;
-      currentMap.createMap(zoomNumber, thisCity);
+      reset();
     } else {
-      alert("wrong");
-      score = score - 50;
+      // alert("wrong");
+      score -= 100;
     }
     $('#score').text(score);
-    console.log(locationNumber);
-    console.log(this.zoom);
   });
 
   $('#zoom-button').click(function(){
     zoomNumber -= 1;
-    var newCity = new Local(locationObjects[locationNumber][0]);
     newCity.getCoordinates(zoomNumber);
   });
-  // $('#portland').click(function(){
-  //   var newCity = new Local("portland, us");
-  //   newCity.getCoordinates();
-  //
-  // })
+
 });

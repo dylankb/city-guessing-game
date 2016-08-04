@@ -7,7 +7,7 @@ Local.prototype.getCoordinates = function(zoomNumber) {
   var thisCity = this.city;
   var self = this;
   var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {'address': thisCity}, function(results) {
+  geocoder.geocode( {'address': "Zürich, Switzerland"}, function(results) {
     self.createMap(zoomNumber, results[0].geometry.location)
   });
 };
@@ -24,7 +24,5 @@ Local.prototype.createMap = function(zoomNumber, latLng) {
 
   return map;
 };
-
-
 
 exports.localModule = Local;
