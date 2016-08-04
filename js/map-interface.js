@@ -154,7 +154,7 @@ $('document').ready(function() {
     if (cityGuess === cityNumber) {
       alert("correct");
       score = score + (10 * zoomNumber);
-
+      zoomNumber = 18;
       reset();
     } else {
       alert("wrong");
@@ -164,7 +164,11 @@ $('document').ready(function() {
   });
 
   $('#zoom-button').click(function(){
+    if (zoomNumber < 9){
     zoomNumber -= 1;
+  } else {
+    zoomNumber -= 4;
+  }
     // debugger;
     newCity.getCoordinates(zoomNumber);
   });
