@@ -1,7 +1,7 @@
 var Local = require('./../js/map-model.js').localModule;
 // var apiKey = require('./../.env').apiKey;
 
-var locationData = [["Aberdeen, Scotland","57","2"],
+var locationObjects = [["Aberdeen, Scotland","57","2"],
 ["Adelaide, Australia","34","138"],
 ["Algiers, Algeria","36","3"],
 ["Amsterdam, Netherlands","52","4"],
@@ -118,60 +118,40 @@ var locationData = [["Aberdeen, Scotland","57","2"],
 ["Wellington, New Zealand","41","174"],
 ["Zürich, Switzerland","47","8"]];
 
-
 $('document').ready(function() {
-  // Get information
-  // var locationData = [
-    // [{lat: 48.854231, lng: 2.3034923}, "europe", "france", "paris"],
-    // [{lat: 19.432724, lng: -99.133362}, "north america", "mexico", "mexico city"],
-    // [{lat: 40.4313399, lng: 116.5637495}, "asia", "china", "beijing"],
-    // [{lat: 29.9792345, lng: 31.1320132}, "africa", "egypt", "giza"]
-    // ];
-
-    // Game setup
-  var locationObjects = [];
-  for (i=0; i<locationData.length; i++) {
-
-    // var geocoder = new google.maps.Geocoder();
-    // geocoder.geocode( {'address': locationData[i][0]}, function(results, status) {
-    //   // console.log(results[0].geometry.location.lat() + " "+ results[0].geometry.location.lng());
-    //   // debugger;
-    //   // return results[0].geometry.location.lat() + " "+ results[0].geometry.location.lng();
-    //   var location = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-    //   return location;
-    // });
-    // var geolocation = geocoder.geocode( {'address': locationData[i][0]}, function(results, status) {
-    //   return {lat: parseInt(results[0].geometry.location.lat()), lng: parseInt(results[0].geometry.location.lng())};
-      // console.log(results[0].geometry.location.lat() + " "+ results[0].geometry.location.lng());
-    // });
-    // debugger;
-    // latLong = location; //{lat: locationData[i][1], lng: locationData[i][2]}
-    latLong = "";
-    city = locationData[i][0];
-    map = new Local(city, latLong);
-    latLong = map.getCoordinates();
-    // map. = latLong
-    debugger;
-
-    locationObjects.push(map);
+  var choices = [];
+  for (i=0; i<5; i++) {
+    newNum = Math.floor((Math.random() * 119)+1);
+    if (choices.indexOf(newNum) === -1) {
+      choices.push(locationObjects[newNum][0]);
+      $("#" + i).append(choices[i]);
+    } else {
+      num = Math.floor((Math.random() * 119)+1);
+      choices.push(locationObjects[num][0]);
+      $("#" + i).text(choices[i]);
+    }
+    correctCity = choices[Math.floor(Math.random() * 4)];
   }
-  // debugger;
-
-  // Gameplay
-  var locationNumber = 0;
+  alert (correctCity + "hi")
+  var newCity = new Local(correctCity);
   var zoomNumber = 18;
-  currentMap = locationObjects[locationNumber];
-  currentMap.createMap(zoomNumber);
+  newCity.getCoordinates(zoomNumber);
+
+
+
+
 
   var score = 1000;
   $('#score').text(score);
+  var newCity = new Local(locationObjects[locationNumber][0]);
+  newCity.getCoordinates(zoomNumber);
 
   // User input
 
   $('#next-map').click(function(){
     locationNumber++;
-    currentMap = locationObjects[locationNumber];
-    currentMap.createMap(zoomNumber);
+    var newCity = new Local(locationObjects[locationNumber][0])
+    newCity.getCoordinates(18);
   });
 
   $('#guess').click(function() {
@@ -180,9 +160,9 @@ $('document').ready(function() {
       alert("correct");
       score = score + (10 * zoomNumber);
       locationNumber++;
-      currentMap = locationObjects[locationNumber];
+      currentMap = locationObjects[locationNumber][0];
       zoomNumber = 18;
-      currentMap.createMap(zoomNumber);
+      currentMap.createMap(zoomNumber, thisCity);
     } else {
       alert("wrong");
       score = score - 50;
@@ -190,15 +170,16 @@ $('document').ready(function() {
     $('#score').text(score);
     console.log(locationNumber);
     console.log(this.zoom);
-
   });
 
   $('#zoom-button').click(function(){
     zoomNumber -= 1;
-    currentMap.createMap(zoomNumber);
+    var newCity = new Local(locationObjects[locationNumber][0]);
+    newCity.getCoordinates(zoomNumber);
   });
-
-
-
-
+  // $('#portland').click(function(){
+  //   var newCity = new Local("portland, us");
+  //   newCity.getCoordinates();
+  //
+  // })
 });

@@ -1,35 +1,30 @@
-function Local(city, latLong) {
+function Local(city) {
   this.city = city;
-  this.geolocation = latLong;
 }
 
-//  var giza = Local({lat: 29.9792345, lng: 31.1320132}, "africa", "egypt", "giza");
-// }
+Local.prototype.getCoordinates = function(zoomNumber) {
 
-Local.prototype.createMap = function(zoomNumber) {
-  // debugger;
+  var thisCity = this.city;
+  var self = this;
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( {'address': thisCity}, function(results) {
+    self.createMap(zoomNumber, results[0].geometry.location)
+  });
+};
+
+Local.prototype.createMap = function(zoomNumber, latLng) {
+
   var map = new google.maps.Map(document.getElementById('map'), {
-    center: this.geolocation,
+    center: latLng,
     scrollwheel: false,
     zoom: zoomNumber,
     mapTypeId: google.maps.MapTypeId.SATELLITE,
     disableDefaultUI: true
   });
 
-  var marker = new google.maps.Marker({
-    map: map,
-    position: this.geolocation,
-    title: 'Hello World!'
-  });
-
   return map;
 };
 
-Local.prototype.getCoordinates = function() {
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {'address': this.city}, function(results, status) {
-    this.geolocation = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
-  });
-};
+
 
 exports.localModule = Local;
