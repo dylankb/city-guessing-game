@@ -138,7 +138,6 @@ $('document').ready(function() {
       cityNumber = Math.floor(Math.random() * 4);
       correctCity = choices[cityNumber];
     }
-    // debugger;
     newCity = new Local(correctCity);
     var zoomNumber = 18;
     newCity.getCoordinates(zoomNumber);
@@ -152,7 +151,6 @@ $('document').ready(function() {
 
   $('#guess').click(function() {
     var cityGuess = parseInt($('input:radio[name=city]:checked').val());
-    alert(cityGuess + " " + cityNumber);
     if (cityGuess === cityNumber) {
       alert("correct");
       score = score + (10 * zoomNumber);
