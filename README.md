@@ -1,10 +1,10 @@
-# Javascript Template
-
-#### This is a starter template for Epicodus JS classes. Current as of August 1, 2016
-
-#### By Dylan Barnard and Matthew Giem
+# City Guessing Game
 
 ## Description
+
+The goal of the game is to guess where in the world you currently are based what you see from a zoomed in Google Map. You can zoom out to better see where you are, but you lose points. The game makes use of Google's [map](https://developers.google.com/maps/) and [geolocation](https://developers.google.com/maps/documentation/geolocation/intro) API.
+
+## Files
 
 This repository contains the following folders and files.  They can be used to support a basic project template for the beginning of each of your projects.
 
